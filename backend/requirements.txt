@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+faster-whisper
+transformers
+sentencepiece
+ffmpeg-python
+python-dotenv
+srt
+setuptools<81
