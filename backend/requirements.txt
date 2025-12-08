@@ -6,4 +6,6 @@ sentencepiece
 ffmpeg-python
 python-dotenv
 srt
+PyTorch
+TensorFlow
 setuptools<81
