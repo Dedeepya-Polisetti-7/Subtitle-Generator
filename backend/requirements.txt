@@ -9,3 +9,8 @@ srt
 torch
 TensorFlow
 setuptools<81
+python-multipart
+setuptools<81
+passlib[bcrypt]
+pyjwt
+fastapi-mail
