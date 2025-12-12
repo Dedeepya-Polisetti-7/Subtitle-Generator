@@ -72,7 +72,7 @@ const Home = () => {
           <div className="plans-grid">
             <div className="plan-card">
               <h3>Monthly</h3>
-              <p className="plan-price">₹77 / month</p>
+              <p className="plan-price">Contact Admin for more details</p>
               <ul className="plan-features">
                 <li>Unlimited video uploads</li>
                 <li>Priority processing</li>
@@ -83,7 +83,7 @@ const Home = () => {
 
             <div className="plan-card plan-card-highlight">
               <h3>Yearly</h3>
-              <p className="plan-price">₹777 / year</p>
+              <p className="plan-price">Contact Admin for more details</p>
               <p className="plan-tag">Best Value</p>
               <ul className="plan-features">
                 <li>Unlimited video uploads</li>
