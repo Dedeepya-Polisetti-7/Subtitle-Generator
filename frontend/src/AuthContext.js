@@ -21,6 +21,26 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [uploadCount, setUploadCount] = useState(0);
+
+  useEffect(() => {
+    const savedCount = localStorage.getItem("uploadCount");
+    if (savedCount) setUploadCount(Number(savedCount));
+  }, []);
+
+  const incrementUpload = () => {
+    setUploadCount((prev) => {
+      const next = prev + 1;
+      localStorage.setItem("uploadCount", next);
+      return next;
+    });
+  };
+
+  const isTrialOver = uploadCount >= 3;
+  
   // REGISTER - returns boolean to match your components usage
   const register = async (email, password) => {
     try {
@@ -102,6 +122,9 @@ export function AuthProvider({ children }) {
         sendResetLink,
         resetPassword,
         changePassword,
+        uploadCount,
+        incrementUpload,
+        isTrialOver,
       }}
     >
       {children}
