@@ -27,7 +27,7 @@ const VideoUploader = () => {
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef(null);
 
-  const { user, uploadCount, incrementUpload, isTrialOver, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // language list (display names)
@@ -65,15 +65,6 @@ const VideoUploader = () => {
 
   const handleUpload = async () => {
     if (!videoFile) { setError("Please select a video file."); return; }
-    if (typeof incrementUpload === "function") {
-      incrementUpload();
-    }
-    if (isTrialOver) {
-      alert("Your free trial of 3 video uploads has ended. Please subscribe to continue.");
-      navigate("/#plans");
-      return;
-    }
-
     setLoading(true); setError(""); setSuccess("");
 
     try {
@@ -85,8 +76,6 @@ const VideoUploader = () => {
         if (response.srt_file) setSrtFilename(response.srt_file);
         if (response.burned_video) setBurnedFilename(response.burned_video);
         if (response.burn_error) setError(`Burn error: ${response.burn_error}`);
-
-        incrementUpload();
       } else {
         setError("Unexpected response format from server.");
       }
@@ -98,8 +87,6 @@ const VideoUploader = () => {
   };
 
   const handleFileInputClick = () => fileInputRef.current?.click();
-  const safeUploadCount = Number.isFinite(uploadCount) ? uploadCount : 0;
-  const remainingUploads = Math.max(0, 3 - safeUploadCount);
 
   return (
     <div className="container">
@@ -108,7 +95,7 @@ const VideoUploader = () => {
         {/* free-trial banner */}
         <div style={{ marginBottom: 16, padding: "10px 14px", borderRadius: 10, background: "rgba(255,255,255,0.15)", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <div style={{ fontSize: "0.95rem", fontWeight: 500 }}>
-            {isTrialOver ? "Your free trial has ended. Subscribe to continue using Cerevyn AI Captioner." : `Free trial: ${remainingUploads} of 3 video uploads remaining.`}
+            {"Enjoy free subtitle generation—usage limits are applied automatically by the system."}
           </div>
           <button className="btn" style={{ padding: "6px 14px", fontSize: "0.85rem" }} onClick={() => navigate("/#plans")}>Subscribe Now</button>
         </div>
