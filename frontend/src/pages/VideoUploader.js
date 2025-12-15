@@ -65,7 +65,9 @@ const VideoUploader = () => {
 
   const handleUpload = async () => {
     if (!videoFile) { setError("Please select a video file."); return; }
-
+    if (typeof incrementUpload === "function") {
+      incrementUpload();
+    }
     if (isTrialOver) {
       alert("Your free trial of 3 video uploads has ended. Please subscribe to continue.");
       navigate("/#plans");
@@ -96,7 +98,8 @@ const VideoUploader = () => {
   };
 
   const handleFileInputClick = () => fileInputRef.current?.click();
-  const remainingUploads = Math.max(0, 3 - uploadCount);
+  const safeUploadCount = Number.isFinite(uploadCount) ? uploadCount : 0;
+  const remainingUploads = Math.max(0, 3 - safeUploadCount);
 
   return (
     <div className="container">
