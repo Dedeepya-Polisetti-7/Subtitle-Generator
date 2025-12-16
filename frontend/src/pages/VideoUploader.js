@@ -28,7 +28,7 @@ const VideoUploader = () => {
   const fileInputRef = useRef(null);
   const [remainingUploads, setRemainingUploads] = useState(null);
   
-  const { user, logout } = useContext(AuthContext);
+  const { user, token, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // language list (display names)
@@ -69,7 +69,7 @@ const VideoUploader = () => {
     setLoading(true); setError(""); setSuccess("");
 
     try {
-      const response = await uploadVideo(videoFile, language.toLowerCase(), burn);
+      const response = await uploadVideo(videoFile, language.toLowerCase(), burn, token);
 
       if (response && response.subtitles && Array.isArray(response.subtitles)) {
         setSubtitles(response.subtitles);
