@@ -26,7 +26,8 @@ const VideoUploader = () => {
   const [burn, setBurn] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef(null);
-
+  const [remainingUploads, setRemainingUploads] = useState(null);
+  
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -73,6 +74,9 @@ const VideoUploader = () => {
       if (response && response.subtitles && Array.isArray(response.subtitles)) {
         setSubtitles(response.subtitles);
         setSuccess("Subtitles generated successfully!");
+        if (response.remaining_uploads !== undefined) {
+          setRemainingUploads(response.remaining_uploads);
+        }
         if (response.srt_file) setSrtFilename(response.srt_file);
         if (response.burned_video) setBurnedFilename(response.burned_video);
         if (response.burn_error) setError(`Burn error: ${response.burn_error}`);
@@ -95,7 +99,8 @@ const VideoUploader = () => {
         {/* free-trial banner */}
         <div style={{ marginBottom: 16, padding: "10px 14px", borderRadius: 10, background: "rgba(255,255,255,0.15)", boxShadow: "0 6px 20px rgba(0,0,0,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <div style={{ fontSize: "0.95rem", fontWeight: 500 }}>
-            {"Enjoy free subtitle generation—usage limits are applied automatically by the system."}
+            {remainingUploads === 0 ? "Free trial completed. Subscribe to continue generating subtitles." : remainingUploads !== null ? `Free trial: ${remainingUploads} of 3 video uploads remaining.`
+                        : "Enjoy free subtitle generation—usage limits are applied automatically by the system." }
           </div>
           <button className="btn" style={{ padding: "6px 14px", fontSize: "0.85rem" }} onClick={() => navigate("/#plans")}>Subscribe Now</button>
         </div>
